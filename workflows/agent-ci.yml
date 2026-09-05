@@ -1,0 +1,65 @@
+name: Theta Agent CI
+
+on:
+  push:
+    branches: [ master, main ]
+    paths:
+      - 'theta-agent/**'
+  pull_request:
+    branches: [ master, main ]
+    paths:
+      - 'theta-agent/**'
+
+defaults:
+  run:
+    working-directory: theta-agent
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+      - name: golangci-lint
+        uses: actions/setup-golangci-lint@v4
+        with:
+          version: "latest"
+      - name: Run linter
+        run: golangci-lint run
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+      - name: Run tests
+        run: go test -v ./...
+
+  build:
+    needs: [lint, test]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        arch: [amd64, arm64]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+      - name: Build binary
+        env:
+          GOOS: linux
+          GOARCH: ${{ matrix.arch }}
+        run: go build -v -o theta-agent-linux-${{ matrix.arch }} .
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: theta-agent-linux-${{ matrix.arch }}
+          path: theta-agent/theta-agent-linux-${{ matrix.arch }}
