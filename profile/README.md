@@ -31,6 +31,7 @@ A decade of engineering independence: from pre-warmed container runtimes and zer
 ## 🏛️ Core Ecosystem Repositories
 
 - **[theta42/community](https://github.com/theta42/community)**: The community hub, engineering chronicle (50 PR announcements dating back to 2014), and free software showcase. Hosted at [community.theta42.com](https://community.theta42.com/).
+- **[theta42/native-ops](https://github.com/theta42/native-ops)**: Generic Incus & Cloud Fleet Orchestration Engine in Go managing DigitalOcean/Proxmox VMs, Incus container workloads, shifted storage volumes, and dynamic Caddy edge reverse proxy routing.
 - **[theta42/theta-suite](https://github.com/theta42/theta-suite)**: Unified one-command (`./setup.sh`) Docker Compose stack for self-hosted OIDC/LDAP identity, reverse proxy, secrets, and inventory mapping.
 - **[theta42/proxy](https://github.com/theta42/proxy)**: High-performance OpenResty/Lua dynamic reverse proxy with native directory single sign-on and automated Let's Encrypt wildcard DNS challenges.
 - **[theta42/theta-directory](https://github.com/theta42/theta-directory)**: Lightweight LDAP web GUI and REST directory engine with HP iLO discovery and live replication convergence.
